@@ -53,4 +53,43 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const user = await User.find().sort({
+      createdAt: "desc",
+    });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const updatePassword = async (req, res) => {
+  const userData = {
+    oldPassword: req.body.oldPassword,
+    newPassword: req.body.newPassword,
+    userAccess: req.params.id,
+  };
+
+  try {
+    let user = await User.findById(userData.userAccess);
+    if (!user) {
+      res.status(404).json("User not found");
+    } else {
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports = { signupUser, loginUser, getUser, getAlllUsers };
