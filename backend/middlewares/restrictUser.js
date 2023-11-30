@@ -5,7 +5,7 @@ const restrictUser = async (req, res, next) => {
     if (!req.user.restrictUser) {
       next();
     } else {
-      res.status(403).json("YOu are restricted");
+      res.status(403).json("You are restricted");
     }
   });
 };
