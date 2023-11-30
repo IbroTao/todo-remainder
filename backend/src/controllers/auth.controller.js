@@ -1,5 +1,5 @@
 const { User } = require("../models/user.model");
-const { hashSync, compareSync } = require("bcryptjs");
+const { hashSync, compareSync, compare, hash } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -74,7 +74,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const updatePassword = async (req, res) => {
+const updateUserPassword = async (req, res) => {
   const userData = {
     oldPassword: req.body.oldPassword,
     newPassword: req.body.newPassword,
@@ -86,10 +86,44 @@ const updatePassword = async (req, res) => {
     if (!user) {
       res.status(404).json("User not found");
     } else {
+      const comparePassword = await compare(
+        userData.oldPassword,
+        user.password
+      );
+      if (comparePassword) {
+        user.password = await hash(userData.newPassword, 10);
+        const updatedUser = await user.save();
+        res.status(200).json("User password updated");
+      } else {
+        res.status(400).json("Incorrect password");
+      }
     }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-module.exports = { signupUser, loginUser, getUser, getAlllUsers };
+const updateUserEmail = async (req, res) => {
+  const userData = {
+    email: req.body.email,
+    password: req.body.email,
+    id: req.params.id,
+  };
+  try {
+    let user = await User.findById(userData.id);
+    if (user) {
+    } else {
+      res.status(404).json("User not found");
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports = {
+  signupUser,
+  loginUser,
+  getUser,
+  getAllUsers,
+  updateUserPassword,
+};
