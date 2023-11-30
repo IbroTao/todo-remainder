@@ -4,10 +4,14 @@ const { Items } = require("../src/models/items.model");
 
 const router = Router();
 
-//get all items
+//get all items by user
 
 router.get("", async (req, res) => {
-  const allItems = await Items.find({});
+
+  let { user } = req.query
+  user = user.toLowerCase()
+
+  const allItems = await Items.find({created_by: user});
 
   res.send(allItems);
 });
@@ -26,12 +30,13 @@ router.get("/:item", async (req, res) => {
 //Add items
 
 router.post("", async (req, res) => {
-  let { item } = req.body;
+  let { item, created_by } = req.body;
   item = item.toLowerCase();
+  created_by = created_by.toLowerCase();
 
-  await Items.insertMany({ item: item });
+  await Items.insertMany({ item: item, created_by: created_by });
 
-  res.send("Item added successfully");
+  res.send(`${item} added successfully by ${created_by}`);
 });
 
 //delete items
