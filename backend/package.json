@@ -10,9 +10,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
+<<<<<<< HEAD
     "mongodb": "^6.3.0",
+=======
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.2",
+    "nodemailer": "^6.9.7",
+>>>>>>> 1724f93a175b82d29a9b673b8d5642324f17a245
     "nodemon": "^3.0.1"
   }
 }
