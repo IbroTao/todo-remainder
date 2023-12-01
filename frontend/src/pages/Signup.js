@@ -14,13 +14,7 @@ const Signup = () => {
 
   const [error, setError] = useState(null);
 
-  const clearInput = () => {
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setError(null);
-  };
+~
 
   const handleSignup = () => {
     const userData = {
