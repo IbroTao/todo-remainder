@@ -1,26 +1,41 @@
 import { useNavigate, Link } from "react-router-dom";
 import React, { useState, useContext } from "react";
+import axios from "axios";
 
 import { UserContext } from "../contextapi/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const { logins, username, setUsername } = useContext(UserContext);
+  const { email, setUsername, setEmail } = useContext(UserContext);
 
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState(null);
 
-  const handleLogin = () => {
-    if (logins.length !== 0) {
-      if (logins[0].password === password) {
-        navigate("/");
+  const handleLogin = async () => {
+    const loginData = {
+      email: email,
+      password: password,
+    };
+
+    if (email !== "") {
+      if (password !== "") {
+        await axios
+          .post("http://localhost:3000/api/auth/login", loginData)
+          .then((res) => {
+            let data = res.data;
+            setUsername(data.user.username);
+            navigate("/");
+          })
+          .catch((err) => {
+            setError(err.response.data);
+          });
       } else {
-        setError("Incorrect password");
+        setError("Please enter your password");
       }
     } else {
-      setError("Incorrect Username");
+      setError("Please enter your email");
     }
   };
 
@@ -37,12 +52,12 @@ const Login = () => {
         </p>
         <h2 className="font-bold text-2xl">Login</h2>
         <input
-          type="text"
+          type="email"
           className=" rounded-md px-4 py-2 border-gray-300 border-2 outline-none"
-          placeholder="Username..."
-          value={username}
+          placeholder="Email..."
+          value={email}
           onChange={(e) => {
-            setUsername(e.target.value);
+            setEmail(e.target.value);
           }}
         />
 

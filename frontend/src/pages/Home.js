@@ -1,17 +1,32 @@
 import React, { useContext } from "react";
-import { AiFillFolder } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
-import { UserContext } from "../contextapi/UserContext";
+
+import { TaskContext } from "../contextapi/TaskContext";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+const tasks = [{
+  task: "workout",
+  time: "9:30",
+},
+  {
+    task: "exams",
+    time: "10:45"
+  }
+
+]
 
 const Home = () => {
-  const { username } = useContext(UserContext);
+  const { username } = useContext(TaskContext);
 
   return (
     <div>
-      <Link to={`/${username}`}>
-        <AiFillFolder />
-      </Link>
+      <Header username={username} />
+      <TaskContext.Provider value={{ tasks }}>
+    
+
+        <Footer/>
+      </TaskContext.Provider>
     </div>
   );
 };
