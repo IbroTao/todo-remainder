@@ -4,19 +4,18 @@ const { Items } = require("../src/models/items.model");
 
 const router = Router();
 
-//get all items by user
+//Get All Items by User
 
 router.get("", async (req, res) => {
+  let { user } = req.query;
+  user = user.toLowerCase();
 
-  let { user } = req.query
-  user = user.toLowerCase()
-
-  const allItems = await Items.find({created_by: user});
+  const allItems = await Items.find({ created_by: user });
 
   res.send(allItems);
 });
 
-//get specific item
+//Get Specific Item
 
 router.get("/:item", async (req, res) => {
   let { item } = req.params;
