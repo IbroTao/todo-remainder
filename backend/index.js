@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const { MONGO } = require("./configs/database");
 const authRouter = require("./routes/user.routes");
-const todoRouter = require("./routes/todos.routes");
+const todoRouter = require("./routes/task.router");
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 app.use("/api/auth", authRouter);
-app.use("/api/items", todoRouter);
+app.use("/api/tasks", todoRouter);
 
 const port = process.env.PORT || 5000;
 
