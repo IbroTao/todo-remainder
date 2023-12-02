@@ -5,7 +5,8 @@ import { UserContext } from "../contextapi/UserContext";
 const UserProfile = () => {
   const { username } = useContext(UserContext);
 
-  return <div>{username}</div>;
+
+  return <div>Profile</div>;
 };
 
 export default UserProfile;

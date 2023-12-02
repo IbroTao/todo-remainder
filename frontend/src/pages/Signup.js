@@ -24,13 +24,14 @@ const Signup = () => {
     };
 
     await axios
-      .post("http://localhost:3000/api/auth/signup", userData)
+      .post("http://localhost:3001/api/auth/signup", userData)
       .then((res) => {
         console.log(res);
+        sessionStorage.setItem("user", JSON.stringify(userData));
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.response.data);
       });
   };
 
@@ -44,8 +45,8 @@ const Signup = () => {
     } else if (password !== confirmPassword) {
       setError("Password doesn't match");
     } else {
-      setError("");
       handleSignup();
+      setError("");
     }
   };
 

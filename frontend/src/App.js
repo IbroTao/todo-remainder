@@ -14,6 +14,7 @@ const App = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
+    let username = JSON.parse(sessionStorage.getItem("user"));
     if (!username) {
       navigate("/login");
     }
@@ -23,7 +24,7 @@ const App = () => {
       <UserContext.Provider value={{ username, email, setUsername, setEmail }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path={`/:${username}`} element={<UserProfile />} />
+          <Route path="/:username" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

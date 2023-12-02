@@ -3,6 +3,7 @@ import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
 const Header = ({ username }) => {
+
   return (
     <div className="flex justify-between items-center py-6 px-5 shadow-md bg-gray-100">
       <div>
@@ -11,7 +12,7 @@ const Header = ({ username }) => {
         </p>
       </div>
       <div>
-        <Link to={`/${username}`}>
+        <Link to={username}>
           <CgProfile size="30px" />
         </Link>
       </div>

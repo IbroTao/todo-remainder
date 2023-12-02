@@ -22,10 +22,12 @@ const Login = () => {
     if (email !== "") {
       if (password !== "") {
         await axios
-          .post("http://localhost:3000/api/auth/login", loginData)
+          .post("http://localhost:3001/api/auth/login", loginData)
           .then((res) => {
             let data = res.data;
             setUsername(data.user.username);
+
+            sessionStorage.setItem("user", JSON.stringify(loginData));
             navigate("/");
           })
           .catch((err) => {
