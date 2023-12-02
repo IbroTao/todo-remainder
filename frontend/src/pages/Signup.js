@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 
 import { UserContext } from "../contextapi/UserContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -6,26 +7,32 @@ import { useNavigate, Link } from "react-router-dom";
 const Signup = () => {
   const navigate = useNavigate();
 
-  const { data, username, setUsername } = useContext(UserContext);
+  const {  username, email, setEmail, setUsername } =
+    useContext(UserContext);
 
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [error, setError] = useState(null);
 
-~
-
-  const handleSignup = () => {
+  const handleSignup = async () => {
     const userData = {
       username: username,
       email: email,
       password: password,
     };
 
-    data.push(userData);
-    console.log(username);
-    navigate("/");
+    await axios
+      .post("http://localhost:3001/api/auth/signup", userData)
+      .then((res) => {
+        console.log(res);
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        navigate("/");
+      })
+      .catch((err) => {
+        setError(err.response.data);
+      });
   };
 
   const handleError = () => {
@@ -38,8 +45,8 @@ const Signup = () => {
     } else if (password !== confirmPassword) {
       setError("Password doesn't match");
     } else {
-      setError("");
       handleSignup();
+      setError("");
     }
   };
 

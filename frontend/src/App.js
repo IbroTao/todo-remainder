@@ -11,36 +11,20 @@ const App = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
-
-  // const logins = JSON.parse(localStorage.getItem("users"));
-  const data = [
-    {
-      username: "smoq",
-      password: "123456",
-    },
-    {
-      username: "kingsley",
-      password: "09090",
-    },
-    {
-      username: "amoke",
-      password: "707070",
-    },
-  ];
-
-  const logins = data.filter((user) => user.username === username);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    if (logins.length === 0) {
+    let username = JSON.parse(sessionStorage.getItem("user"));
+    if (!username) {
       navigate("/login");
     }
   }, []);
   return (
     <div>
-      <UserContext.Provider value={{ data, logins, username, setUsername }}>
+      <UserContext.Provider value={{ username, email, setUsername, setEmail }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path={`/:${username}`} element={<UserProfile />} />
+          <Route path="/:username" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
